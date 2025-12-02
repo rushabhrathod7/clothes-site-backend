@@ -8,7 +8,9 @@ dotenv.config();
 const createInitialAdmin = async () => {
   try {
     // Connect to MongoDB
-    await mongoose.connect("mongodb://localhost:27017/ecommerce");
+    await mongoose.connect(
+      "mongodb+srv://rhushabh:rush7411@cluster0.pbrupta.mongodb.net/?appName=Cluster0"
+    );
     console.log("Connected to MongoDB");
 
     // Check if admin already exists

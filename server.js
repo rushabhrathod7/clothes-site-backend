@@ -51,6 +51,8 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "https://api.cloudinary.com",
+      "https://clothes-site-admin-frontend.vercel.app",
+      "https://clothes-site-client-frontend.vercel.app",
     ],
     credentials: true, // Allow cookies to be sent with requests
   })
