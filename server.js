@@ -45,15 +45,34 @@ await connectDB();
 const app = express();
 
 // Configure CORS with options for cookies to work properly
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://api.cloudinary.com",
+  "https://clothes-site-admin-frontend.vercel.app",
+  "https://clothes-site-client-frontend.vercel.app",
+  "https://clothes-site-frontend.vercel.app",
+  process.env.CLIENT_ORIGIN,
+  process.env.ADMIN_ORIGIN,
+].filter(Boolean);
+
+const vercelPreviewRegex =
+  /^https:\/\/clothes-site-frontend-[a-z0-9-]+\.vercel\.app$/;
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "https://api.cloudinary.com",
-      "https://clothes-site-admin-frontend.vercel.app",
-      "https://clothes-site-client-frontend.vercel.app",
-    ],
+    origin: (origin, callback) => {
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin) || vercelPreviewRegex.test(origin)) {
+        return callback(null, true);
+      }
+
+      console.warn(`Blocked CORS request from origin: ${origin}`);
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true, // Allow cookies to be sent with requests
   })
 );

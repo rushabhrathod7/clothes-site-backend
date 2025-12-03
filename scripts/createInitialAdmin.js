@@ -9,7 +9,7 @@ const createInitialAdmin = async () => {
   try {
     // Connect to MongoDB
     await mongoose.connect(
-      "mongodb+srv://rhushabh:rush7411@cluster0.pbrupta.mongodb.net/?appName=Cluster0"
+      "mongodb+srv://rhushabh:rush7411@cluster0.pbrupta.mongodb.net/ecommerce?appName=ecommerceApp"
     );
     console.log("Connected to MongoDB");
 
