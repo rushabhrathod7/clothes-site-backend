@@ -50,6 +50,16 @@ export const getAllOrders = async (req, res) => {
         shippingCost: order.shippingCost || 0,
         tax: order.tax || 0,
         discount: order.discount || 0,
+        // Ensure payment object exists with default values
+        payment: order.payment || {
+          method: "cod",
+          status: "pending",
+          amount: 0,
+        },
+        // Ensure shipping object exists with default values
+        shipping: order.shipping || {
+          method: "standard",
+        },
         items: order.items.map((item) => {
           // Handle case where productId might be null, undefined, or an object
           let productData = null;
