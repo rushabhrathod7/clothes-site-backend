@@ -44,6 +44,12 @@ export const getAllOrders = async (req, res) => {
 
       return {
         ...order,
+        // Ensure all numeric fields have default values
+        total: order.total || 0,
+        subtotal: order.subtotal || 0,
+        shippingCost: order.shippingCost || 0,
+        tax: order.tax || 0,
+        discount: order.discount || 0,
         items: order.items.map((item) => {
           // Handle case where productId might be null, undefined, or an object
           let productData = null;
@@ -73,8 +79,10 @@ export const getAllOrders = async (req, res) => {
             name: item.name || productData?.name || "Deleted Product",
             // Use the first image from product data if available, otherwise keep existing image
             image: firstImage || item.image || null,
-            // Keep the original price or fallback to product price
-            price: item.price || productData?.price || 0,
+            // Keep the original price or fallback to product price, ensure it's a number
+            price: Number(item.price || productData?.price || 0),
+            // Ensure quantity is a number
+            quantity: Number(item.quantity || 0),
             // Keep track if the product exists (check if productData has name property)
             productExists: !!(productData && productData.name),
           };
